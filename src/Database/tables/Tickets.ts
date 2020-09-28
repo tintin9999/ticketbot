@@ -31,7 +31,7 @@ export default class Tickets extends GenericTable<Ticket> {
   }
 
   public async updateTicket(_id: Ticket['_id'], newContent: Ticket['content']): Promise<void> {
-    await this.collection.update(
+    await this.collection.updateOne(
       { _id },
       { $set: {
         content: newContent,
@@ -41,6 +41,6 @@ export default class Tickets extends GenericTable<Ticket> {
   }
 
   public async deleteTicket(_id: Ticket['_id']): Promise<void> {
-    await this.collection.remove({ _id });
+    await this.collection.deleteOne({ _id });
   }
 }
