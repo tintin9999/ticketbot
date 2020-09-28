@@ -1,4 +1,4 @@
-export const REPO_URL = 'https://github.com/dankmemer/ticketbot';
+export const REPO_URL = 'https://github.com/tintin9999/ticketbot';
 
 export enum Defaults {
   RESULTS_PER_PAGE = 5,

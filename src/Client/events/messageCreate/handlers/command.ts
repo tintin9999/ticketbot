@@ -68,12 +68,12 @@ export const handleCommand: Handler = async function (msg) {
       await msg.channel.createMessage(opts);
     }
   } catch (err) {
-    console.error(err);
+    console.error(err.stack);
     msg.channel.createMessage({
       embed: {
         color: 0xca2d36,
         title: 'oh no',
-        description: `\`\`\`js\n${err.stack}\n\`\`\``,
+        description: `\`\`\`js\n${err.message}\n\`\`\``,
       },
     });
   }
