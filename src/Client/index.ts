@@ -19,7 +19,7 @@ export type TicketBotOptions = {
     lonAdmin: string;
     lonTesters: string;
     dvMod: string;
-    dvStaff: string;
+    dvAdmin: string;
     tdkMod: string;
     tdkAdmin: string;
   };

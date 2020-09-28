@@ -4,7 +4,7 @@ import { MessageContent } from 'eris';
 import { config } from '../../../../';
 
 const iOSDoubleHyphen = /—/g;
-const whitelistedRoles = [config.roles.lonAdmin, config.roles.lonTesters, config.roles.dvMod, config.roles.dvStaff, config.roles.tdkMod, config.roles.tdkAdmin];
+const whitelistedRoles = [config.roles.lonAdmin, config.roles.lonTesters, config.roles.dvMod, config.roles.dvAdmin, config.roles.tdkMod, config.roles.tdkAdmin];
 const whitelistedChannels = [
   config.channels.lonBotCat,
   config.channels.lonTestCat,
