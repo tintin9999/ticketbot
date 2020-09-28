@@ -12,10 +12,16 @@ export type TicketBotOptions = {
   channels: {
     lonBotCat: string;
     lonTestCat: string;
+    tdkModCat: string;
+    dvModCat: string;
   };
   roles: {
     lonAdmin: string;
     lonTesters: string;
+    dvMod: string;
+    dvStaff: string;
+    tdkMod: string;
+    tdkAdmin: string;
   };
   prefix: string;
   owners: string[];

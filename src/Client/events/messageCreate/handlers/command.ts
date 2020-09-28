@@ -4,10 +4,12 @@ import { MessageContent } from 'eris';
 import { config } from '../../../../';
 
 const iOSDoubleHyphen = /—/g;
-const whitelistedRoles = [config.roles.lonAdmin, config.roles.lonTesters];
+const whitelistedRoles = [config.roles.lonAdmin, config.roles.lonTesters, config.roles.dvMod, config.roles.dvStaff, config.roles.tdkMod, config.roles.tdkAdmin];
 const whitelistedChannels = [
   config.channels.lonBotCat,
   config.channels.lonTestCat,
+  config.channels.tdkModCat,
+  config.channels.dvModCat
 ];
 
 export const handleCommand: Handler = async function (msg) {
