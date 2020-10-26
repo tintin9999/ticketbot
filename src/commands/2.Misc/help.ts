@@ -12,6 +12,7 @@ export default class HelpCommand implements ICommand {
     const categories = commandsArray
       .map(command => command.category)
       .filter(unique)
+      .filter(cat => cat !== '4.Utils')
       .sort();
 
     this.renderedResult = {

@@ -1,5 +1,5 @@
 import { Client } from 'eris';
-import { commands, Context } from '../commands';
+import { commandLoader, Context, ICommand } from '../commands';
 import * as events from './events';
 import Database from '../Database';
 
@@ -25,6 +25,8 @@ export type TicketBotOptions = {
 export default class TicketBot extends Client {
   public opts: TicketBotOptions;
   public context: Context;
+  
+  public commands: Map<string, ICommand> = new Map();
 
   constructor(opts: TicketBotOptions) {
     super(`Bot ${opts.keys.discord}`, {
@@ -34,7 +36,7 @@ export default class TicketBot extends Client {
 
     this.opts = opts;
     this.context = {
-      commands,
+      commands: this.commands,
       client: this,
       db: new Database(),
     };
@@ -50,9 +52,35 @@ export default class TicketBot extends Client {
     ]);
   }
 
-  public async loadCommands(): Promise<number> {
+   public async loadCommands(): Promise<number> {    
+    await commandLoader.populate();
+
+    for (const [ category, CommandClass ] of commandLoader.commands) {
+      const command = new CommandClass() as ICommand;
+    
+      if (!command.onLoad) {
+        command.onLoad = (): void => void 0;
+      }
+      if (!command.category) {
+        command.category = category;
+      }
+      if (!command.aliases) {
+        command.aliases = [];
+      }
+      if (!command.help) {
+        command.help = '';
+      }
+
+      command.loaded = false;
+    
+      this.commands.set(command.name, command);
+      for (const alias of command.aliases) {
+        this.commands.set(alias, command);
+      }
+    }
+
     return Promise.all(
-      [ ...commands.values() ]
+      [ ...this.commands.values() ]
         .map(command => {
           if (!command.loaded) {
             command.loaded = true;

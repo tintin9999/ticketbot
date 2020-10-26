@@ -34,13 +34,16 @@ export const TicketRenderer = {
       value: state === TicketRenderStates.OPEN
         ? 'Open'
         : `Closed by ${closer.username} at ${dateToString(new Date())}`
+    }, {
+      name: 'Guild',
+      value: ticket.guild || 'No guild registerd.'
     } ]
   }),
 
   renderTickets: (tickets: Ticket[]): EmbedOptions => ({
     title: 'Open Tickets',
     fields: tickets
-      .sort((a, b) => a._id - b._id)
+      .sort((a, b) => (a._id as number) - (b._id as number))
       .map(ticket => ({
         name: `Ticket #${ticket._id}`,
         value: TicketRenderer.truncate(`_Created/last edited at ${dateToString(ticket.createdAt)} by <@${ticket.userID}>_\n\n${ticket.content}`)

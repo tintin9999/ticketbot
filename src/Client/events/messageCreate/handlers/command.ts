@@ -1,36 +1,42 @@
 import Handler from './Handler';
-import { commands } from '../../../../commands';
 import { MessageContent } from 'eris';
 import { config } from '../../../../';
 
 const iOSDoubleHyphen = /—/g;
-const whitelistedRoles = [config.roles.lonAdmin, config.roles.lonTesters];
-const whitelistedChannels = [
-  config.channels.lonBotCat,
-  config.channels.lonTestCat,
-];
+// const whitelistedRoles = [config.roles.lonAdmin, config.roles.lonTesters];
+// const whitelistedChannels = [
+//   config.channels.lonBotCat,
+//   config.channels.lonTestCat,
+// ];
 
 export const handleCommand: Handler = async function (msg) {
-  if (msg.channel.type !== 0) {
-    return;
-  }
+  if (!config.owners.includes(msg.member.id)) {
+    const guildIDs = await this.context.db.guilds.getAllGuilds();
+    if (msg.channel.type !== 0 || !guildIDs.includes(msg.channel.guild.id)) {
+      return;
+    }
 
-  if (!this.opts.guildIDs.includes(msg.channel.guild.id)) {
-    return;
-  }
+    const guild = await this.context.db.guilds.get(msg.member.guild.id);
+    const {
+      channels: whitelistedChannels,
+      roles: whitelistedRoles,
+    } = guild.whitelists;
+    
+    if (
+      whitelistedRoles.every((roleID) => !msg.member.roles.includes(roleID))
+    ) {
+      return;
+    }
 
-  if (whitelistedRoles.every((roleID) => !msg.member.roles.includes(roleID))) {
-    return;
-  }
-
-  if (
-    whitelistedChannels.every(
-      (channelID) =>
-        msg.channel.id !== channelID &&
-        (msg.channel as any).parentID !== channelID,
-    )
-  ) {
-    return;
+    if (
+      whitelistedChannels.every(
+        (channelID) =>
+          msg.channel.id !== channelID &&
+          (msg.channel as any).parentID !== channelID,
+      )
+    ) {
+      return;
+    }
   }
 
   if (!msg.content.toLowerCase().startsWith(this.opts.prefix)) {
@@ -41,7 +47,7 @@ export const handleCommand: Handler = async function (msg) {
     .slice(this.opts.prefix.length)
     .replace(iOSDoubleHyphen, '--')
     .split(/ +/g);
-  const command = commands.get(commandName);
+  const command = this.commands.get(commandName);
   if (!command) {
     return;
   }

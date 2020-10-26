@@ -20,7 +20,8 @@ export default class CreateCommand implements ICommand {
         await client.getDMChannel(msg.author.id).then(c => c.id)
       ]
         .filter(unique)
-        .map(channelID => ({ channelID, messageID: null }))
+        .map(channelID => ({ channelID, messageID: null })),
+      guild: msg.member.guild.name
     };
 
     await Promise.all(

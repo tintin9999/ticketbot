@@ -30,5 +30,6 @@ commands.populate()
     }
   });
 
-export { commandMap as commands };
+// export { commandMap as commands };
+export { commands as commandLoader };
 export * from './Command';
