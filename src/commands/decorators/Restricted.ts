@@ -1,5 +1,4 @@
 import { ICommand, CommandParams, CommandOutput } from '../Command';
-import { config } from '../../';
 
 export const Restricted = ({ roleIDs = [], userIDs = [] }: {
   roleIDs?: string[];
@@ -12,7 +11,7 @@ export const Restricted = ({ roleIDs = [], userIDs = [] }: {
           throw new Error("Expected at least one filter parameter");
         }
 
-        const guild = client.guilds.get(config.guildIDs[0]);
+        const guild = client.guilds.get(msg.member.guild.id);
         const member = guild.members.get(msg.author.id);
 
         if (
