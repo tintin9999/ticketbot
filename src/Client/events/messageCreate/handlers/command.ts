@@ -3,15 +3,10 @@ import { MessageContent } from 'eris';
 import { config } from '../../../../';
 
 const iOSDoubleHyphen = /—/g;
-// const whitelistedRoles = [config.roles.lonAdmin, config.roles.lonTesters];
-// const whitelistedChannels = [
-//   config.channels.lonBotCat,
-//   config.channels.lonTestCat,
-// ];
 
 export const handleCommand: Handler = async function (msg) {
   if (!config.owners.includes(msg.member.id)) {
-    const guildIDs = await this.context.db.guilds.getAllGuilds();
+    const guildIDs = await this.context.db.guilds.getAllGuildIDs();
     if (msg.channel.type !== 0 || !guildIDs.includes(msg.channel.guild.id)) {
       return;
     }
