@@ -9,9 +9,11 @@ export const onMessageCreate: Event = {
       return;
     }
 
+    const guilds = await this.context.db.guilds.getAllGuildIDs();
+
     if (
       msg.channel.type === 0 &&
-      !this.opts.guildIDs.includes(msg.channel.guild.id)
+      !guilds.includes(msg.channel.guild.id)
     ) {
       return;
     }
