@@ -4,7 +4,7 @@ import { escapeMarkdown } from '../../lib/util';
 
 export default class ViewCommand implements ICommand {
   name = 'view';
-  help = '<ticket id> <content to append> [--override]';
+  help = '<ticket id>';
   raw = true;
 
   public async execute({ client, db, args }: CommandParams): Promise<CommandOutput> {
