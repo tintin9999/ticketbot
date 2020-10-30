@@ -1,10 +1,7 @@
 import { ICommand, CommandParams, CommandOutput } from '../Command';
-import { Restricted } from '../decorators';
-import { config } from '../..';
 import { whitelist } from '../../Database/tables/Guilds';
 import { Message } from 'eris';
 
-@Restricted({ userIDs: config.owners })
 export default class WhitelistCommand implements ICommand {
   name = 'whitelist';
   aliases = ['wl'];
@@ -15,11 +12,9 @@ export default class WhitelistCommand implements ICommand {
     const guild = msg.member.guild;
     if (type === 'role') {
       return guild.roles.has(id);
-
     } else if (type === 'channel') {
       const channel = guild.channels.get(id);
-      return channel && channel.type === 0;
-    
+      return channel && (channel.type === 0 || channel.type === 4);
     } else if (type === 'user') {
       return guild.members.has(id);
     }
@@ -32,7 +27,7 @@ export default class WhitelistCommand implements ICommand {
     msg,
     args,
   }: CommandParams): Promise<CommandOutput> {
-    if (args.length !== 2) {
+    if (args.length < 2) {
       return this.default;
     }
 
@@ -53,16 +48,16 @@ export default class WhitelistCommand implements ICommand {
       wlEntity,
     );
 
-    let sep;
+    let sep: string;
     switch (wlType) {
       case 'channel':
         sep = '#';
         break;
-    
-      case 'role': 
+
+      case 'role':
         sep = '@&';
         break;
-      
+
       case 'user':
         sep = '@';
         break;
