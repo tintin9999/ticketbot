@@ -13,12 +13,16 @@ export const handleCommand: Handler = async function (msg) {
 
     const guild = await this.context.db.guilds.get(msg.member.guild.id);
     const {
-      channels: whitelistedChannels,
-      roles: whitelistedRoles,
+      channels: whitelistedChannels = [],
+      roles: whitelistedRoles = [],
+      users: whitelistedUsers = [],
     } = guild.whitelists;
     
+    const bypass = whitelistedUsers.includes(msg.author.id);
+
     if (
       whitelistedRoles.every((roleID) => !msg.member.roles.includes(roleID))
+      && !bypass
     ) {
       return;
     }
@@ -29,6 +33,7 @@ export const handleCommand: Handler = async function (msg) {
           msg.channel.id !== channelID &&
           (msg.channel as any).parentID !== channelID,
       )
+      && !bypass
     ) {
       return;
     }
