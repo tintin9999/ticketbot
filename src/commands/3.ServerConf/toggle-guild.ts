@@ -10,6 +10,9 @@ export default class ToggleGuildCommand implements ICommand {
     const guild: Guild = {
       guildID: msg.member.guild.id,
       ownerID: msg.member.guild.ownerID,
+      whitelists: {
+        users: [msg.member.guild.ownerID],
+      }
     };
     
     if (await db.guilds.exists(guild)) {
