@@ -4,13 +4,18 @@ export type Guild = {
   guildID: string;
   ownerID: string;
   whitelists?: {
-    roles: string[];
-    channels: string[];
-    users: string[];
+    roles?: string[];
+    channels?: string[];
+    users?: string[];
   };
 } & GenericEntity;
 
 export type whitelist = 'user' | 'role' | 'channel';
+
+export type RemovedEntity = {
+  type: string;
+  id: string;
+};
 
 export default class Guilds extends GenericTable<Guild> {
   public get(guildID: Guild['guildID']): Promise<Guild> {
@@ -29,7 +34,7 @@ export default class Guilds extends GenericTable<Guild> {
     await this.collection.deleteOne({ guildID });
   }
 
-  public async getAllGuilds(): Promise<Guild['guildID'][]> {
+  public async getAllGuildIDs(): Promise<Guild['guildID'][]> {
     return this.getAll().then((guilds) => guilds.map((g) => g.guildID));
   }
 
@@ -47,5 +52,23 @@ export default class Guilds extends GenericTable<Guild> {
     );
 
     return false;
+  }
+
+  public async removeWhitelist(guild: Guild, identity: string): Promise<RemovedEntity | null> {
+    for (const key of Object.keys(guild.whitelists)) {
+      if (guild.whitelists[key].includes(identity)) {
+        this.collection.updateOne({ _id: guild._id }, {
+          $pull: {
+            [`whitelists.${key}`] : identity
+          }
+        });
+        
+        return {
+          type: key,
+          id: identity
+        };
+      }
+    }
+    return null;
   }
 }
