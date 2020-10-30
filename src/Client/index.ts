@@ -8,15 +8,6 @@ export type TicketBotOptions = {
     discord: string;
     mongo: string;
   };
-  guildIDs: string[];
-  channels: {
-    lonBotCat: string;
-    lonTestCat: string;
-  };
-  roles: {
-    lonAdmin: string;
-    lonTesters: string;
-  };
   prefix: string;
   owners: string[];
   development: boolean;

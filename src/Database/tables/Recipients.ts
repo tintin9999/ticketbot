@@ -15,7 +15,7 @@ export default class Recipients extends GenericTable<Recipient> {
   }
 
   public async removeRecipient(recipient: Recipient): Promise<void> {
-    await this.collection.remove({ userID: recipient.userID });
+    await this.collection.deleteOne({ userID: recipient.userID });
   }
 
   public async getAllRecipientChannels(): Promise<Recipient['channelID'][]> {

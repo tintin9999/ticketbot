@@ -12,15 +12,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/dankmemer/ticketbot.git"
+    "url": "git+https://github.com/tintin9999/ticketbot.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/dankmemer/ticketbot/issues"
+    "url": "https://github.com/tintin9999/ticketbot/issues"
   },
-  "homepage": "https://github.com/dankmemer/ticketbot#readme",
+  "homepage": "https://github.com/tintin9999/ticketbot#readme",
   "dependencies": {
     "ts-node": "^8.5.4",
     "eris": "^0.11.2",
@@ -31,8 +31,8 @@
     "@types/node": "^13.1.2",
     "@typescript-eslint/eslint-plugin": "^2.14.0",
     "@typescript-eslint/parser": "^2.14.0",
-    "typescript": "^3.8.3",
+    "eslint": "^6.8.0",
     "ts-node-dev": "^1.0.0-pre.44",
-    "eslint": "^6.8.0"
+    "typescript": "^3.8.3"
   }
 }
