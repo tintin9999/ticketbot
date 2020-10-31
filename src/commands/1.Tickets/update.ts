@@ -35,7 +35,7 @@ export default class UpdateCommand implements ICommand {
     }
     for (const recipient of ticket.recipients) {
       client.editMessage(recipient.channelID, recipient.messageID, {
-        embed: TicketRenderer.renderTicket(ticket, client.users.get(ticket.userID), TicketRenderer.States.OPEN)
+        embed: TicketRenderer.renderTicket(ticket, await client.getRESTUser(ticket.userID), TicketRenderer.States.OPEN)
       }).catch(() => void 0);
     }
 

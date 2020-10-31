@@ -15,6 +15,6 @@ export default class ViewCommand implements ICommand {
 
     return args.includes('--raw')
       ? escapeMarkdown(ticket.content)
-      : TicketRenderer.renderTicket(ticket, client.users.get(ticket.userID), TicketRenderer.States.OPEN);
+      : TicketRenderer.renderTicket(ticket, await client.getRESTUser(ticket.userID), TicketRenderer.States.OPEN);
   }
 }

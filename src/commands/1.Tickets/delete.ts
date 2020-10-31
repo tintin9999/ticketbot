@@ -24,7 +24,7 @@ export default class DeleteCommand implements ICommand {
 
     for (const recipient of ticket.recipients) {
       client.editMessage(recipient.channelID, recipient.messageID, {
-        embed: TicketRenderer.renderTicket(ticket, client.users.get(ticket.userID), TicketRenderer.States.CLOSED, msg.author)
+        embed: TicketRenderer.renderTicket(ticket, await client.getRESTUser(ticket.userID), TicketRenderer.States.CLOSED, msg.author)
       }).catch(() => void 0);
     }
 
