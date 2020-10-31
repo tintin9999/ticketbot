@@ -1,6 +1,7 @@
 import Event from '../Event';
 import { Message } from 'eris';
 import * as handlers from './handlers';
+import { config } from '../../..';
 
 export const onMessageCreate: Event = {
   packetName: 'messageCreate',
@@ -13,7 +14,8 @@ export const onMessageCreate: Event = {
 
     if (
       msg.channel.type === 0 &&
-      !guilds.includes(msg.channel.guild.id)
+      !guilds.includes(msg.channel.guild.id) &&
+      !config.owners.includes(msg.author.id)
     ) {
       return;
     }
