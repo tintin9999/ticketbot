@@ -4,7 +4,6 @@ import { unique } from '../../lib/util';
 
 export default class HelpCommand implements ICommand {
   private renderedResult: EmbedOptions;
-
   name = 'help';
 
   public onLoad({ client, commands }: Context): void {

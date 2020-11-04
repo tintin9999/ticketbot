@@ -10,7 +10,6 @@ export default class EvalCommand implements ICommand {
   aliases = ['e'];
   help = 'up the shut fuck';
   raw = true;
-
   credentialRegex: RegExp;
 
   public onLoad({ client }: Context): void {

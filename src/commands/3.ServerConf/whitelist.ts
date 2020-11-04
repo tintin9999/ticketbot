@@ -22,11 +22,7 @@ export default class WhitelistCommand implements ICommand {
     return false;
   }
 
-  public async execute({
-    db,
-    msg,
-    args,
-  }: CommandParams): Promise<CommandOutput> {
+  public async execute({ db, msg, args }: CommandParams): Promise<CommandOutput> {
     if (args.length < 2) {
       return this.default;
     }

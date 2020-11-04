@@ -6,6 +6,7 @@ import { config } from '../../';
 @Restricted({ userIDs: config.owners })
 export default class ToggleGuildCommand implements ICommand {
   name = 'toggle-guild';
+  
   public async execute({ db, msg }: CommandParams): Promise<CommandOutput> {
     const guild: Guild = {
       guildID: msg.member.guild.id,

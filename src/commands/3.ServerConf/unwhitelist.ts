@@ -5,11 +5,7 @@ export default class UnwhitelistCommand implements ICommand {
   aliases = ['unwl'];
   help = 'unwl [id]';
 
-  public async execute({
-    db,
-    msg,
-    args,
-  }: CommandParams): Promise<CommandOutput> {
+  public async execute({ db, msg, args }: CommandParams): Promise<CommandOutput> {
     const [id] = args;
 
     const guild = await db.guilds.get(msg.member.guild.id);
@@ -21,7 +17,7 @@ export default class UnwhitelistCommand implements ICommand {
     const entity = await db.guilds.removeWhitelist(guild, id);
 
     if (!entity) {
-      return "Couldn't remove entity from whitelist, was it even included?";
+      return 'Couldn\'t remove entity from whitelist, was it even included?';
     }
 
     let sep: string;

@@ -6,10 +6,7 @@ export default class ShowWhitelist implements ICommand {
   aliases = ['wlls'];
   help = 'wlls';
 
-  public async execute({
-    db,
-    msg,
-  }: CommandParams): Promise<CommandOutput> {
+  public async execute({ db, msg }: CommandParams): Promise<CommandOutput> {
     const { whitelists } = await db.guilds.get(msg.member.guild.id);
     const output: EmbedOptions = {
       title: 'Whitelist',
