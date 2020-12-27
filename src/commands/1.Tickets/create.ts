@@ -7,6 +7,9 @@ export default class CreateCommand implements ICommand {
   name = 'create';
   help = '<content>';
   public async execute({ client, db, msg, args }: CommandParams): Promise<CommandOutput> {
+    if (1) {
+      return 'Ticket creation has been halted till 1st of Jan due to the currently on-going dank memer rules updation.';
+    }
     if (args.length === 0) {
       return 'you can\'t create an empty ticket, please try again.';
     }
