@@ -8,7 +8,7 @@ export default class CreateCommand implements ICommand {
   help = '<content>';
   public async execute({ client, db, msg, args }: CommandParams): Promise<CommandOutput> {
     if (1) {
-      return 'Ticket creation has been halted till 1st of Jan due to the currently on-going dank memer rules updation.';
+      return 'Ticket creation has been halted till 4th-5th of this month due to the currently on-going dank memer rules revamp. It will be available after that and there will be an official post regarding it in the Support Server when that happens.';
     }
     if (args.length === 0) {
       return 'you can\'t create an empty ticket, please try again.';
@@ -19,11 +19,14 @@ export default class CreateCommand implements ICommand {
       _id: await db.tickets.getIncrementingID(),
       content: args.join(' '),
       recipients: [
-        ...await db.recipients.getAllRecipientChannels(),
-        await client.getDMChannel(msg.author.id).then(c => c.id)
-      ]
+          ...await db.recipients.getAllRecipientChannels(),
+          await client.getDMChannel(msg.author.id).then(c => c.id)
+        ]
         .filter(unique)
-        .map(channelID => ({ channelID, messageID: null })),
+        .map(channelID => ({
+          channelID,
+          messageID: null
+        })),
       guild: msg.member.guild.name
     };
 
@@ -32,12 +35,12 @@ export default class CreateCommand implements ICommand {
         client.createMessage(recipient.channelID, {
           embed: TicketRenderer.renderTicket(ticket, msg.author, TicketRenderer.States.OPEN)
         })
-          .then(message => {
-            recipient.messageID = message.id;
-          })
-          .catch(() => {
-            ticket.recipients.splice(idx, 1);
-          })
+        .then(message => {
+          recipient.messageID = message.id;
+        })
+        .catch(() => {
+          ticket.recipients.splice(idx, 1);
+        })
       )
     );
 
@@ -45,11 +48,13 @@ export default class CreateCommand implements ICommand {
 
     return {
       title: `Successfully created ticket #${ticket._id}`,
-      fields: [ {
+      fields: [{
         name: 'Content',
         value: ticket.content
-      } ],
-      footer: { text: 'You should have received a copy of this ticket in your DMs.' }
+      }],
+      footer: {
+        text: 'You should have received a copy of this ticket in your DMs.'
+      }
     };
   }
 }
