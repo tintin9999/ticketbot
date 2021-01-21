@@ -1,6 +1,5 @@
 {
   "compilerOptions": {
-    "types": [""],
     "incremental": false,
     "target": "es6",
     "module": "commonjs",
@@ -13,6 +12,10 @@
     "removeComments": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
-    "experimentalDecorators": true
-  }
+    "experimentalDecorators": true,
+    "noEmit": false,
+  },
+  "include": [
+    "./src/**/*"
+  ]
 }

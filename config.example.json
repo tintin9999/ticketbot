@@ -4,19 +4,6 @@
     "discord": "",
     "mongo": ""
   },
-  "guildIDs": [
-    ""
-  ],
-  "roles": {
-    "lonTesters": "",
-    "lonAdmin": ""
-  },
-  "channels": {
-    "lonBotCat": "",
-    "lonTestCat": ""
-  },
   "prefix": "",
-  "owners": [
-    ""
-  ]
+  "owners": [""]
 }

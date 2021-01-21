@@ -8,7 +8,8 @@
     "dev": "ts-node-dev --transpileOnly ./src/index.ts",
     "lint": "eslint -c ./.eslintrc.js --ext .ts .",
     "dry": "tsc --noEmit",
-    "test": "npm run lint && npm run dry"
+    "test": "npm run lint && npm run dry",
+    "compile": "tsc -p tsconfig.json"
   },
   "repository": {
     "type": "git",
