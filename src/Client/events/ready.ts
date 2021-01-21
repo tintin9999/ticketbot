@@ -3,6 +3,10 @@ export const onReady: Event = {
   packetName: 'ready',
   handler() {
     console.log('ready');
-    this.editStatus('dnd');
+    this.editStatus(null, {
+      name: 'pp create',
+      type: 1,
+      url: 'https://www.twitch.tv/twitch'
+    });
   }
 };
