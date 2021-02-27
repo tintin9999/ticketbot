@@ -2,14 +2,14 @@ import { promises as fs } from 'fs';
 import * as path from 'path';
 
 const commands = [];
-const nonCommands = [ 'Command.ts', 'commands.ts', 'index.ts', 'decorators' ];
+const nonCommands = [ 'Command', 'commands', 'index', 'decorators' ];
 
 export default {
   commands,
 
   async populate(): Promise<void> {
     for (const category of await fs.readdir(__dirname)) {
-      if (nonCommands.includes(category)) {
+      if (nonCommands.some(nonCommand => category.startsWith(nonCommand))) {
         continue;
       }
 
