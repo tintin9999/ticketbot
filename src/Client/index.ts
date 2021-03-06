@@ -10,6 +10,7 @@ export type TicketBotOptions = {
   };
   prefix: string;
   owners: string[];
+  botMods: string[];
   development: boolean;
 };
 

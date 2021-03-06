@@ -1,6 +1,9 @@
 import { ICommand, CommandParams, CommandOutput } from '../Command';
 import { Recipient } from '../../Database/tables/Recipients';
+import { Restricted } from '../decorators';
+import { config } from '../../';
 
+@Restricted({ userIDs: config.botMods })
 export default class RecipientToggleCommand implements ICommand {
   name = 'recipient-toggle';
   public async execute({ client, db, msg }: CommandParams): Promise<CommandOutput> {
