@@ -3,7 +3,7 @@ import { CommandParams, CommandOutput } from '../Command';
 
 export default class AppendCommand extends UpdateCommand {
   name = 'append';
-  help = '<ticket ID>';
+  help = '<ticket ID> <content to add>';
 
   public execute({ args, ...rest }: CommandParams): Promise<CommandOutput> {
     args.push('--append');

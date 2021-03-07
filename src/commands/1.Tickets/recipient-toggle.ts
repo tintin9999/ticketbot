@@ -6,6 +6,7 @@ import { config } from '../../';
 @Restricted({ userIDs: config.botMods })
 export default class RecipientToggleCommand implements ICommand {
   name = 'recipient-toggle';
+  aliases = ['getdms'];
   public async execute({ client, db, msg }: CommandParams): Promise<CommandOutput> {
     const recipient: Recipient = {
       userID: msg.author.id,
