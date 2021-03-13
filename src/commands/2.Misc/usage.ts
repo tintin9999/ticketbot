@@ -1,11 +1,14 @@
 import { ICommand, CommandParams, CommandOutput } from '../Command';
+import { Restricted } from '../decorators';
+import { config } from '../../';
 import axios from 'axios';
 import QuickChart from 'quickchart-js';
 import { usageDataRenderer } from '../../renderers';
 
+@Restricted({ userIDs: [...config.botMods, ...config.owners] })
 export default class DisplayDataCommand implements ICommand {
-  name = 'display-data';
-  aliases = ['dd', 'u', 'usage'];
+  name = 'usage';
+  aliases = ['u', 'dd', 'display-data'];
   linkReg = /https:\/\/hastepaste.com\/view\/(?<linkID>.*)/;
   myChart = null;
 
@@ -23,11 +26,11 @@ export default class DisplayDataCommand implements ICommand {
 
     const { linkID } = res.groups;
     const rawLink = `https://hastepaste.com/raw/${linkID}`;
-    const data = await axios.get(rawLink);
+    const usage = await axios.get(rawLink);
     const jsonData: {
       [k: string]: number;
     } = JSON.parse(
-      (data.data as string).replace(/'/g, '"').replace(/\w+:/g, (s) => {
+      (usage.data as string).replace(/'/g, '"').replace(/\w+:/g, (s) => {
         const [pre] = s.split(':');
         return `"${pre}":`;
       }),
@@ -35,6 +38,7 @@ export default class DisplayDataCommand implements ICommand {
 
     this.myChart.setConfig(usageDataRenderer(jsonData));
     return {
+      title: 'Command Usage Data',
       image: {
         url: this.myChart.getUrl(),
       },

@@ -1,4 +1,4 @@
-export const usageDataRenderer = (jsonData: { [k: string]: number }) => {
+export const usageDataRenderer = (jsonData: { [k: string]: number }): any => {
   const [cmdLabels, cmdCount] = Object.entries(jsonData)
     .sort((a, b) => b[1] - a[1])
     .slice(0, 10)
@@ -35,6 +35,10 @@ export const usageDataRenderer = (jsonData: { [k: string]: number }) => {
       ],
     },
     options: {
+      title: {
+        display: true,
+        text: 'Command Usage',
+      },
       legend: {
         position: 'right',
       },

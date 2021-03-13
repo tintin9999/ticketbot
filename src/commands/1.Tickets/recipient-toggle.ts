@@ -3,7 +3,7 @@ import { Recipient } from '../../Database/tables/Recipients';
 import { Restricted } from '../decorators';
 import { config } from '../../';
 
-@Restricted({ userIDs: config.botMods })
+@Restricted({ userIDs: [...config.botMods, ...config.owners] })
 export default class RecipientToggleCommand implements ICommand {
   name = 'recipient-toggle';
   aliases = ['getdms'];
