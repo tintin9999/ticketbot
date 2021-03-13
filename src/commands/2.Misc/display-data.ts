@@ -5,7 +5,7 @@ import { usageDataRenderer } from '../../renderers';
 
 export default class DisplayDataCommand implements ICommand {
   name = 'display-data';
-  aliases = ['dd'];
+  aliases = ['dd', 'u', 'usage'];
   linkReg = /https:\/\/hastepaste.com\/view\/(?<linkID>.*)/;
   myChart = null;
 
