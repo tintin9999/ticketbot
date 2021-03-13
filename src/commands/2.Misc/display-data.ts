@@ -1,6 +1,7 @@
 import { ICommand, CommandParams, CommandOutput } from '../Command';
-import fetch from 'node-fetch';
+import axios from 'axios';
 import QuickChart from 'quickchart-js';
+import { usageDataRenderer } from '../../renderers';
 
 export default class DisplayDataCommand implements ICommand {
   name = 'display-data';
@@ -10,6 +11,7 @@ export default class DisplayDataCommand implements ICommand {
 
   public async onLoad(): Promise<void> {
     this.myChart = new QuickChart();
+    this.myChart.setWidth(640).setHeight(480).setBackgroundColor('#0d0c1d');
   }
 
   public async execute({ args }: CommandParams): Promise<CommandOutput> {
@@ -21,33 +23,21 @@ export default class DisplayDataCommand implements ICommand {
 
     const { linkID } = res.groups;
     const rawLink = `https://hastepaste.com/raw/${linkID}`;
-    const data = await fetch(rawLink);
+    const data = await axios.get(rawLink);
     const jsonData: {
       [k: string]: number;
-    } = await data.json();
+    } = JSON.parse(
+      (data.data as string).replace(/'/g, '"').replace(/\w+:/g, (s) => {
+        const [pre] = s.split(':');
+        return `"${pre}":`;
+      }),
+    );
 
-    const [cmdLabels, cmdCount] = Object.entries(jsonData)
-      .sort((a, b) => b[1] - a[1])
-      .slice(0, 10)
-      .reduce((acc, elem) => {
-        acc[0].push(elem[0]);
-        acc[1].push(elem[1]);
-        return acc;
-      }, [[], []]);
-
-    this.myChart.setConfig({
-      type: 'pie',
-      data: {
-        labels: cmdLabels,
-        datasets: [{
-          data: cmdCount
-        }]
-      }
-    }).setWidth(640).setHeight(480);
+    this.myChart.setConfig(usageDataRenderer(jsonData));
     return {
       image: {
-        url: this.myChart.getUrl()
-      }
+        url: this.myChart.getUrl(),
+      },
     };
   }
 }
