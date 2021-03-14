@@ -1,7 +1,25 @@
-export const usageDataRenderer = (jsonData: { [k: string]: number }): any => {
+const colors = [
+  '#e27d60',
+  '#085dcb',
+  '#e8a87c',
+  '#c38d9e',
+  '#41b3a3',
+  '#8d8741',
+  '#659dbd',
+  '#daad86',
+  '#bc986a',
+  '#fbeec1',
+];
+
+const randomColor = () => colors[Math.floor(Math.random() * colors.length)];
+
+export const usageDataRenderer = (
+  jsonData: { [k: string]: number },
+  count = 10,
+): any => {
   const [cmdLabels, cmdCount] = Object.entries(jsonData)
     .sort((a, b) => b[1] - a[1])
-    .slice(0, 10)
+    .slice(0, count)
     .reduce(
       (acc, elem) => {
         acc[0].push(elem[0]);
@@ -17,18 +35,10 @@ export const usageDataRenderer = (jsonData: { [k: string]: number }): any => {
       labels: cmdLabels,
       datasets: [
         {
-          backgroundColor: [
-            '#e27d60',
-            '#085dcb',
-            '#e8a87c',
-            '#c38d9e',
-            '#41b3a3',
-            '#8d8741',
-            '#659dbd',
-            '#daad86',
-            '#bc986a',
-            '#fbeec1',
-          ],
+          backgroundColor:
+            count === 10
+              ? colors
+              : new Array(count).fill(null).map(randomColor),
           data: cmdCount,
           borderColor: '#00000000',
         },
@@ -46,9 +56,9 @@ export const usageDataRenderer = (jsonData: { [k: string]: number }): any => {
         outlabels: {
           text: '%l %p',
           color: 'black',
-          stretch: 35,
+          stretch: 30,
           font: {
-            minSize: 16,
+            minSize: 14,
           },
         },
       },

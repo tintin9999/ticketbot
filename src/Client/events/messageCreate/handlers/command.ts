@@ -5,6 +5,9 @@ import { config } from '../../../../';
 const iOSDoubleHyphen = /—/g;
 
 export const handleCommand: Handler = async function (msg) {
+  if (msg.author.bot) {
+    return null;
+  }
   if (!config.owners.includes(msg.member.id)) {
     const guildIDs = await this.context.db.guilds.getAllGuildIDs();
     if (msg.channel.type !== 0 || !guildIDs.includes(msg.channel.guild.id)) {

@@ -6,9 +6,6 @@ import { config } from '../../..';
 export const onMessageCreate: Event = {
   packetName: 'messageCreate',
   async handler(msg: Message) {
-    if (msg.author.bot) {
-      return;
-    }
 
     const guilds = await this.context.db.guilds.getAllGuildIDs();
 

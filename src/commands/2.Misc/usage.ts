@@ -36,7 +36,7 @@ export default class DisplayDataCommand implements ICommand {
       }),
     );
 
-    this.myChart.setConfig(usageDataRenderer(jsonData));
+    this.myChart.setConfig(usageDataRenderer(jsonData, Number.isNaN(+args[1]) ? 10 : +args[1]));
     return {
       title: 'Command Usage Data',
       image: {
