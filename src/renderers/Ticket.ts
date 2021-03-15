@@ -3,7 +3,7 @@ import { User, EmbedOptions } from 'eris';
 import { dateToString } from '../lib/util';
 import { EmbedLimits } from '../Constants';
 
-const TRUNCATE_MSG = '\n\n`...` [see full ticket with `gucci view`]';
+const TRUNCATE_MSG = '\n\n`...` [see full ticket with `pp view`]';
 enum TicketRenderStates {
   OPEN,
   CLOSED,
@@ -36,7 +36,7 @@ export const TicketRenderer = {
         : `Closed by ${closer.username} at ${dateToString(new Date())}`
     }, {
       name: 'Guild',
-      value: ticket.guild || 'No guild registerd.'
+      value: ticket.guild || 'Guild not registered.'
     } ]
   }),
 

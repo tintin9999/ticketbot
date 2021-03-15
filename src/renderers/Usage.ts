@@ -9,9 +9,19 @@ const colors = [
   '#daad86',
   '#bc986a',
   '#fbeec1',
+  '#ffab02',
+  '#ffffff',
+  '#f05959',
+  '#229274',
+  '#d3342d',
+  '#836fff',
+  '#00b2ee',
+  '#42c994',
+  '#5a7aac',
+  '#009874',
 ];
 
-const randomColor = () => colors[Math.floor(Math.random() * colors.length)];
+const randomColor: () => string = () => colors[Math.floor(Math.random() * colors.length)];
 
 export const usageDataRenderer = (
   jsonData: { [k: string]: number },
@@ -40,7 +50,7 @@ export const usageDataRenderer = (
               ? colors
               : new Array(count).fill(null).map(randomColor),
           data: cmdCount,
-          borderColor: '#00000000',
+          borderColor: 0,
         },
       ],
     },
@@ -58,7 +68,7 @@ export const usageDataRenderer = (
           color: 'black',
           stretch: 30,
           font: {
-            minSize: 14,
+            minSize: 13,
           },
         },
       },

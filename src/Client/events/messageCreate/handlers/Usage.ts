@@ -1,10 +1,10 @@
 import Handler from './Handler';
 
 export const handleUsageCommand: Handler = async function (msg) {
-  const usageRegex = /Command usage for \*\*(?<username>[\w ]+#\d{4})\*\* (?<userID>\d{15,21}): (?<link>https:\/\/hastepaste.com\/view\/.*)/g
+  const usageRegex = /Command usage for \*\*(?<username>[\w ]+#\d{4})\*\* (?<userID>\d{15,21}): (?<link>https:\/\/hastepaste.com\/view\/.*)/g;
 
   if (msg.author.id !== '270904126974590976') {
-    return;
+    return null;
   }
 
   usageRegex.lastIndex = 0;
@@ -15,8 +15,7 @@ export const handleUsageCommand: Handler = async function (msg) {
 
   const { username, link } = res.groups;
   try {
-    msg.author.id = '434613993253109760';
-    const commandRes = await this.commands.get('u').execute({ msg, args: [link], ...this.context });
+    const commandRes = await this.commands.get('usage').execute({ msg, args: [link], ...this.context });
     await msg.channel.createMessage({
       embed: {
         ...(commandRes as object),

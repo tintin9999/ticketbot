@@ -1,11 +1,8 @@
 import { ICommand, CommandParams, CommandOutput } from '../Command';
-import { Restricted } from '../decorators';
-import { config } from '../../';
 import axios from 'axios';
 import QuickChart from 'quickchart-js';
 import { usageDataRenderer } from '../../renderers';
 
-@Restricted({ userIDs: [...config.botMods, ...config.owners] })
 export default class DisplayDataCommand implements ICommand {
   name = 'usage';
   aliases = ['u', 'dd', 'display-data'];
@@ -24,6 +21,7 @@ export default class DisplayDataCommand implements ICommand {
       return 'You need to provide a valid hastepaste link.';
     }
 
+    let amount = 10;
     const { linkID } = res.groups;
     const rawLink = `https://hastepaste.com/raw/${linkID}`;
     const usage = await axios.get(rawLink);
@@ -36,12 +34,20 @@ export default class DisplayDataCommand implements ICommand {
       }),
     );
 
-    this.myChart.setConfig(usageDataRenderer(jsonData, Number.isNaN(+args[1]) ? 10 : +args[1]));
+    if (+args[1]) {
+      +args[1] > 20 ? null : amount = +args[1];
+    }
+
+    this.myChart.setConfig(usageDataRenderer(jsonData, amount));
     return {
-      title: 'Command Usage Data',
+      author: {
+        name: 'Command Usage Data',
+        url: args[0],
+      },
       image: {
         url: this.myChart.getUrl(),
       },
+      timestamp: new Date(),
     };
   }
 }
