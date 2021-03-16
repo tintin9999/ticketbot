@@ -50,7 +50,7 @@ export const usageDataRenderer = (
               ? colors
               : new Array(count).fill(null).map(randomColor),
           data: cmdCount,
-          borderColor: 0,
+          borderColor: '#00000000',
         },
       ],
     },

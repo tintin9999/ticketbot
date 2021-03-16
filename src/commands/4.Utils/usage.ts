@@ -11,7 +11,7 @@ export default class DisplayDataCommand implements ICommand {
 
   public async onLoad(): Promise<void> {
     this.myChart = new QuickChart();
-    this.myChart.setWidth(640).setHeight(480).setBackgroundColor('#0d0c1d');
+    this.myChart.setWidth(640).setHeight(480).setBackgroundColor('#0D0C1D');
   }
 
   public async execute({ args }: CommandParams): Promise<CommandOutput> {
@@ -41,7 +41,7 @@ export default class DisplayDataCommand implements ICommand {
     this.myChart.setConfig(usageDataRenderer(jsonData, amount));
     return {
       author: {
-        name: 'Command Usage Data',
+        name: 'Hastepaste Link',
         url: args[0],
       },
       image: {

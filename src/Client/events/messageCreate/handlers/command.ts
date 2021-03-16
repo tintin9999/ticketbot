@@ -8,10 +8,10 @@ export const handleCommand: Handler = async function (msg) {
   if (msg.author.bot) {
     return null;
   }
-  if (!config.owners.includes(msg.member.id)) {
+  if (!config.owners.includes(msg.author.id)) {
     const guildIDs = await this.context.db.guilds.getAllGuildIDs();
     if (msg.channel.type !== 0 || !guildIDs.includes(msg.channel.guild.id)) {
-      return;
+      return null;
     }
 
     const guild = await this.context.db.guilds.get(msg.member.guild.id);
@@ -27,7 +27,7 @@ export const handleCommand: Handler = async function (msg) {
       whitelistedRoles.every((roleID) => !msg.member.roles.includes(roleID))
       && !bypass
     ) {
-      return;
+      return null;
     }
 
     if (
@@ -38,12 +38,12 @@ export const handleCommand: Handler = async function (msg) {
       )
       && !bypass
     ) {
-      return;
+      return null;
     }
   }
 
   if (!msg.content.toLowerCase().startsWith(this.opts.prefix)) {
-    return;
+    return null;
   }
 
   const [commandName, ...args] = msg.content
@@ -52,7 +52,7 @@ export const handleCommand: Handler = async function (msg) {
     .split(/ +/g);
   const command = this.commands.get(commandName);
   if (!command) {
-    return;
+    return null;
   }
 
   try {
