@@ -1,4 +1,4 @@
-import { Client } from 'eris';
+import { Client, Collection, User } from 'eris';
 import { commandLoader, Context, ICommand } from '../commands';
 import * as events from './events';
 import Database from '../Database';
@@ -22,9 +22,11 @@ export default class TicketBot extends Client {
 
   constructor(opts: TicketBotOptions) {
     super(`Bot ${opts.keys.discord}`, {
-      getAllUsers: !opts.development,
+      getAllUsers: false,
       restMode: true
     });
+
+    this.users = new Collection(User, 1);
 
     this.opts = opts;
     this.context = {

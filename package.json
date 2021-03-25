@@ -9,7 +9,8 @@
     "lint": "eslint -c ./.eslintrc.js --ext .ts .",
     "dry": "tsc --noEmit",
     "test": "npm run lint && npm run dry",
-    "compile": "tsc -p tsconfig.json"
+    "compile": "tsc -p tsconfig.json",
+    "build": "bash ./scripts/build.sh"
   },
   "repository": {
     "type": "git",
@@ -38,6 +39,8 @@
     "@typescript-eslint/eslint-plugin": "^2.34.0",
     "@typescript-eslint/parser": "^2.34.0",
     "eslint": "^6.8.0",
+    "filewatcher": "^3.0.1",
+    "node-notifier": "^9.0.1",
     "ts-node-dev": "^1.1.1",
     "typescript": "^3.9.7"
   }

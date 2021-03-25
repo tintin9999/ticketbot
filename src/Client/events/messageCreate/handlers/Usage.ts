@@ -7,6 +7,14 @@ export const handleUsageCommand: Handler = async function (msg) {
     return null;
   }
 
+  if (msg.channel.type !== 0) {
+    return null;
+  }
+
+  if (msg.channel.guild.id !== '820181861740838932') {
+    return null;
+  }
+
   usageRegex.lastIndex = 0;
   const res = usageRegex.exec(msg.content);
   if (!res) {
