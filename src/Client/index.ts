@@ -17,13 +17,19 @@ export type TicketBotOptions = {
 export default class TicketBot extends Client {
   public opts: TicketBotOptions;
   public context: Context;
-  
   public commands: Map<string, ICommand> = new Map();
 
   constructor(opts: TicketBotOptions) {
     super(`Bot ${opts.keys.discord}`, {
+      intents: [
+        "guilds",
+        "guildMembers",
+        "guildBans",
+        "guildMessages",
+        "directMessages"
+      ],
       getAllUsers: false,
-      restMode: true
+      restMode: true,
     });
 
     this.users = new Collection(User, 1);
