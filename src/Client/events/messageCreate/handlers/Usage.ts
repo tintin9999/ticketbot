@@ -11,7 +11,7 @@ export const handleUsageCommand: Handler = async function (msg) {
     return null;
   }
 
-  if (msg.channel.guild.id !== '820181861740838932') {
+  if (msg.guildID !== '820181861740838932' || msg.channel.id !== '704300099039133746') {
     return null;
   }
 
