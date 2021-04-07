@@ -1,5 +1,5 @@
 import Handler from './Handler';
-const guildIDs: string[] = ['470337009886429194', '820181861740838932']; // DMO and Bot Moderation servers
+const guildIDs = ['470337009886429194', '820181861740838932']; // DMO and Bot Moderation servers
 
 export const handleUsageCommand: Handler = async function (msg) {
   const usageRegex = /Command usage for \*\*(?<username>[\w ]+#\d{4})\*\* (?<userID>\d{15,21}): (?<link>https:\/\/hastepaste.com\/view\/.*)/g;

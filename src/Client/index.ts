@@ -12,6 +12,10 @@ export type TicketBotOptions = {
   owners: string[];
   botMods: string[];
   development: boolean;
+  guildLogger: {
+    id: string;
+    token: string;
+  };
 };
 
 export default class TicketBot extends Client {

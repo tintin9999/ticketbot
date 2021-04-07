@@ -11,13 +11,13 @@ export default class UnwhitelistCommand implements ICommand {
     const guild = await db.guilds.get(msg.member.guild.id);
 
     if (id === guild.ownerID) {
-      return 'Can not remove guild owner from whitelist.';
+      return 'Can\'t remove guild owner from whitelist.';
     }
 
     const entity = await db.guilds.removeWhitelist(guild, id);
 
     if (!entity) {
-      return 'Couldn\'t remove entity from whitelist, was it even included?';
+      return 'Couldn\'t remove entity from whitelist, are you sure it was there?';
     }
 
     let sep: string;

@@ -7,21 +7,30 @@ import { config } from '../../';
 export default class ToggleGuildCommand implements ICommand {
   name = 'toggle-guild';
   
-  public async execute({ db, msg }: CommandParams): Promise<CommandOutput> {
+  public async execute({ client, db, args }: CommandParams): Promise<CommandOutput> {
+    const [id] = args;
+    const restGuild = await client.getRESTGuild(id);
+
+    if (!id || !restGuild) {
+      return 'This is an invalid guild ID or I\'m not in here.';
+    }
+
     const guild: Guild = {
-      guildID: msg.member.guild.id,
-      ownerID: msg.member.guild.ownerID,
+      guildID: restGuild.id,
+      ownerID: restGuild.ownerID,
       whitelists: {
-        users: [msg.member.guild.ownerID],
+        users: [restGuild.ownerID],
       }
     };
-    
+
     if (await db.guilds.exists(guild)) {
       db.guilds.removeGuild(guild.guildID);
-      return 'Successfully removed guild. Bot usage prohibited.';
+      return `Successfully removed guild: **${restGuild.name}**`;
     }
 
     await db.guilds.addGuild(guild);
-    return 'Successfully added guild. You may use the bot here.';
+    const channel = await client.getDMChannel(restGuild.ownerID);
+    await channel.createMessage('The bot is now usable in your server, run `pp help` for more information or view the above DM if you got it. Contact Dauntless or tintin if you run into any issues.\n\n**Note**: All tickets are dm\'d to bot moderators, so avoid any false reports etc.').catch((err) => console.log(err));
+    return `Successfully added guild: **${restGuild.name}**`;
   }
 }

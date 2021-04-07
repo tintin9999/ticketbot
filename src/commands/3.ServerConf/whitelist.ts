@@ -6,10 +6,10 @@ export default class WhitelistCommand implements ICommand {
   name = 'whitelist';
   aliases = ['wl'];
   help = 'wl [type] [id]';
-  default = `**Invalid Arguments**\nUsage: \`${this.help}\`\nAcceptable types: role, channel, user`;
+  default = `**Invalid Arguments**\nUsage: \`${this.help}\`\nAcceptable types: role, channel, user\nExample: \`pp wl user 266432078222983169\``;
 
   private validate(msg: Message, id: string, type: whitelist): boolean {
-    const guild = msg.member.guild;
+    const { guild } = msg.member;
     if (type === 'role') {
       return guild.roles.has(id);
     } else if (type === 'channel') {
