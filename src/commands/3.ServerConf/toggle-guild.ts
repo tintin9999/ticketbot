@@ -8,10 +8,14 @@ export default class ToggleGuildCommand implements ICommand {
   name = 'toggle-guild';
   
   public async execute({ client, db, args }: CommandParams): Promise<CommandOutput> {
+    if (!args) {
+      return 'gonna need a server ID';
+    }
+  
     const [id] = args;
     const restGuild = await client.getRESTGuild(id);
 
-    if (!id || !restGuild) {
+    if (!restGuild) {
       return 'This is an invalid guild ID or I\'m not in here.';
     }
 

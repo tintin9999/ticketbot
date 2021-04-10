@@ -40,6 +40,15 @@ export const TicketRenderer = {
     } ]
   }),
 
+  renderContent: (ticket: Ticket): string => {
+    const idRegex = /\d{15,21}/g;
+    const res = idRegex.exec(ticket.content);
+    if (!res) {
+      return '';
+    }
+    return res[0];
+  },
+
   renderTickets: (tickets: Ticket[]): EmbedOptions => ({
     title: 'Open Tickets',
     fields: tickets

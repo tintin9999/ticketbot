@@ -4,7 +4,6 @@ import { EmbedOptions } from 'eris';
 export default class ShowWhitelist implements ICommand {
   name = 'show-whitelist';
   aliases = ['wlls'];
-  help = 'wlls';
 
   public async execute({ db, msg }: CommandParams): Promise<CommandOutput> {
     const { whitelists } = await db.guilds.get(msg.member.guild.id);

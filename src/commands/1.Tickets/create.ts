@@ -30,6 +30,7 @@ export default class CreateCommand implements ICommand {
     await Promise.all(
       ticket.recipients.map((recipient, idx) =>
         client.createMessage(recipient.channelID, {
+          content: TicketRenderer.renderContent(ticket),
           embed: TicketRenderer.renderTicket(ticket, msg.author, TicketRenderer.States.OPEN)
         })
         .then(message => {
