@@ -10,7 +10,7 @@ export const onGuildDelete: Event = {
       embeds: [
         {
           title: 'Left Guild',
-          description: `Guild name: ${guild.name}\nGuild ID: \`${guild.id}\`\nOwner: <@${guild.ownerID}>`,
+          description: `Guild name: ${guild.name}\nGuild ID: \`${guild.id}\`\nMembers: \`${guild.memberCount}\`\nOwner: <@${guild.ownerID}>`,
           timestamp: new Date(),
         }
       ]
