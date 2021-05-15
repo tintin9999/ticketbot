@@ -4,13 +4,6 @@ export enum Defaults {
   RESULTS_PER_PAGE = 5,
 }
 
-export const basicHelp = ['- pp request: request for the bot to be usable in your server', 
-'- pp whitelist <role | channel | user> <role id or channel id>: whitelist a role or channel ID\nExample: ```\npp wl user 266432078222983169```', 
-'- pp unwhitelist <role, user or channel id>: remove a role, channel or user ID from the whitelist\nExample: ```\npp unwl 829240309749514281```', 
-'- pp show-whitelist: show what users/roles/channels can access the bot, only users with certain roles that are also in the whitelisted channels will get a response to commands',
-'\n- example ticket:\n```\npp create Rule 6, ID: 266432078222983169\nproof: https://i.imgur.com/o3u5aD2.png```'
-];
-
 export enum Permissions {
   CREATE_INSTANT_INVITE = 1 << 0,
   KICK_MEMBERS          = 1 << 1,
@@ -47,3 +40,10 @@ export enum Permissions {
 export enum EmbedLimits {
   MAX_FIELD_VALUE = 1024,
 }
+
+export const basicHelp = ['- pp request: request for the bot to be usable in your server', 
+'- pp whitelist <role | channel | user> <role id or channel id>: whitelist a role or channel ID\nExample: ```\npp wl user 266432078222983169```', 
+'- pp unwhitelist <role, user or channel id>: remove a role, channel or user ID from the whitelist\nExample: ```\npp unwl 829240309749514281```', 
+'- pp show-whitelist: show what users/roles/channels can access the bot, only users with certain roles that are also in the whitelisted channels will get a response to commands',
+'\n- example ticket:\n```\npp create Rule 6, ID: 266432078222983169\nproof: https://i.imgur.com/o3u5aD2.png```'
+];
