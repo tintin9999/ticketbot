@@ -1,2 +1,2 @@
 export * from './command';
-export * from './Lottery';
+export * from './LotteryAnnouncer';

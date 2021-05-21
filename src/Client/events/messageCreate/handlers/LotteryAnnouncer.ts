@@ -10,6 +10,5 @@ export const lotteryAnnouncer: Handler = async function (msg) {
   } catch (e) { 
     console.error(e.stack);
   }
-  console.log('Successfully auto-published lottery message');
-  return null;
+  return console.log('Successfully auto-published lottery message');
 };
