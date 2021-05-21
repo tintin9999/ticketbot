@@ -16,6 +16,10 @@ export type TicketBotOptions = {
     id: string;
     token: string;
   };
+  guild: {
+    ID: string;
+    cmdChannel: string;
+  };
 };
 
 export default class TicketBot extends Client {
