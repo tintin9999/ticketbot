@@ -37,7 +37,7 @@ export default class EvalCommand implements ICommand {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const ctx = { msg, ...rest };
       res = await eval(
-        input.indexOf('await') > 0
+        input.includes('await')
           ? `(async () => { ${input} })()`
           : input
       );
