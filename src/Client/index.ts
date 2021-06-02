@@ -1,4 +1,4 @@
-import { Client } from 'eris';
+import { Client, Collection, User } from 'eris';
 import { commandLoader, Context, ICommand } from '../commands';
 import * as events from './events';
 import Database from '../Database';
@@ -12,19 +12,35 @@ export type TicketBotOptions = {
   owners: string[];
   botMods: string[];
   development: boolean;
+  guildLogger: {
+    id: string;
+    token: string;
+  };
+  guild: {
+    ID: string;
+    cmdChannel: string;
+  };
 };
 
 export default class TicketBot extends Client {
   public opts: TicketBotOptions;
   public context: Context;
-  
   public commands: Map<string, ICommand> = new Map();
 
   constructor(opts: TicketBotOptions) {
     super(`Bot ${opts.keys.discord}`, {
-      getAllUsers: !opts.development,
-      restMode: true
+      intents: [
+        "guilds",
+        "guildMembers",
+        "guildBans",
+        "guildMessages",
+        "directMessages"
+      ],
+      getAllUsers: false,
+      restMode: true,
     });
+
+    this.users = new Collection(User, 1);
 
     this.opts = opts;
     this.context = {

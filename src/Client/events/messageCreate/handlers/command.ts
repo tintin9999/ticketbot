@@ -8,6 +8,28 @@ export const handleCommand: Handler = async function (msg) {
   if (msg.author.bot) {
     return null;
   }
+
+  if (!msg.content.toLowerCase().startsWith(this.opts.prefix)) {
+    return null;
+  }
+
+  if (msg.author.id === msg.member.guild.ownerID && msg.content.toLowerCase() === `${config.prefix}request`) {
+    const { id, token } = config.guildLogger;
+    await this.executeWebhook(id, token, {
+      content: `${config.owners.map((r) => `<@${r}>`).join(', ')}`,
+      embeds: [
+        {
+          title: msg.member.guild.name,
+          description: `Request for bot usage\nServer ID: \`${msg.guildID}\`\nServer name: ${msg.member.guild.name}\nMembers: ${msg.member.guild.memberCount}\nContact: ${msg.author.mention}`
+        }
+      ]
+    });
+    await msg.channel.createMessage(
+      'Request sent to owners, you will get a DM from me when the bot is usable in your server.'
+    );
+    return null;
+  }
+
   if (!config.owners.includes(msg.author.id)) {
     const guildIDs = await this.context.db.guilds.getAllGuildIDs();
     if (msg.channel.type !== 0 || !guildIDs.includes(msg.channel.guild.id)) {
@@ -18,14 +40,14 @@ export const handleCommand: Handler = async function (msg) {
     const {
       channels: whitelistedChannels = [],
       roles: whitelistedRoles = [],
-      users: whitelistedUsers = [],
+      users: whitelistedUsers = []
     } = guild.whitelists;
-    
+
     const bypass = whitelistedUsers.includes(msg.author.id);
 
     if (
-      whitelistedRoles.every((roleID) => !msg.member.roles.includes(roleID))
-      && !bypass
+      whitelistedRoles.every((roleID) => !msg.member.roles.includes(roleID)) &&
+      !bypass
     ) {
       return null;
     }
@@ -34,16 +56,12 @@ export const handleCommand: Handler = async function (msg) {
       whitelistedChannels.every(
         (channelID) =>
           msg.channel.id !== channelID &&
-          (msg.channel as any).parentID !== channelID,
-      )
-      && !bypass
+          (msg.channel as any).parentID !== channelID
+      ) &&
+      !bypass
     ) {
       return null;
     }
-  }
-
-  if (!msg.content.toLowerCase().startsWith(this.opts.prefix)) {
-    return null;
   }
 
   const [commandName, ...args] = msg.content
@@ -51,6 +69,7 @@ export const handleCommand: Handler = async function (msg) {
     .replace(iOSDoubleHyphen, '--')
     .split(/ +/g);
   const command = this.commands.get(commandName);
+
   if (!command) {
     return null;
   }
@@ -59,7 +78,7 @@ export const handleCommand: Handler = async function (msg) {
     const res = await command.execute({
       msg,
       args,
-      ...this.context,
+      ...this.context
     });
 
     if (res) {
@@ -82,8 +101,8 @@ export const handleCommand: Handler = async function (msg) {
       embed: {
         color: 0xca2d36,
         title: 'oh no',
-        description: `\`\`\`js\n${err.message}\n\`\`\``,
-      },
+        description: `\`\`\`js\n${err.message}\n\`\`\``
+      }
     });
   }
 };

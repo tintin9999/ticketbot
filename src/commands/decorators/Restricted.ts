@@ -18,16 +18,7 @@ export const Restricted = ({ roleIDs = [], userIDs = [] }: {
           !userIDs.includes(msg.author.id) &&
           !(member && member.roles.some(roleID => roleIDs.includes(roleID)))
         ) {
-          return {
-            title: 'Unauthorized to run command',
-            description: `This command is locked to the following entities:\n\n${
-              userIDs.map(userID => `- <@${userID}> (user)`)
-                .concat(
-                  roleIDs.map(roleID => `- ${guild.roles.get(roleID).name} (role)`)
-                )
-                .join('\n')
-            }`
-          };
+          return null;
         }
 
         return super.execute({ client, msg, ...rest });

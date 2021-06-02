@@ -9,7 +9,8 @@
     "lint": "eslint -c ./.eslintrc.js --ext .ts .",
     "dry": "tsc --noEmit",
     "test": "npm run lint && npm run dry",
-    "compile": "tsc -p tsconfig.json"
+    "compile": "tsc -p tsconfig.json",
+    "build": "bash ./scripts/build.sh"
   },
   "repository": {
     "type": "git",
@@ -25,7 +26,7 @@
   "dependencies": {
     "axios": "^0.21.1",
     "chart.js": "^2.9.4",
-    "eris": "^0.11.3",
+    "eris": "^0.14.0",
     "mongodb": "^3.6.3",
     "node-ts": "^5.1.1",
     "quickchart-js": "^1.0.6",
@@ -38,6 +39,8 @@
     "@typescript-eslint/eslint-plugin": "^2.34.0",
     "@typescript-eslint/parser": "^2.34.0",
     "eslint": "^6.8.0",
+    "filewatcher": "^3.0.1",
+    "node-notifier": "^9.0.1",
     "ts-node-dev": "^1.1.1",
     "typescript": "^3.9.7"
   }
