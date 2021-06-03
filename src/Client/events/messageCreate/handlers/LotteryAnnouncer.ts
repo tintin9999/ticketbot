@@ -1,7 +1,7 @@
 import Handler from './Handler';
 
 export const lotteryAnnouncer: Handler = async function (msg) {
-  if (msg.channel.id !== '816669934218117160') {
+  if (msg.channel.id !== '816669934218117160') { // #lottery in LoN
     return null;
   }
 
