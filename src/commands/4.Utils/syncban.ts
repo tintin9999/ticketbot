@@ -5,8 +5,7 @@ import { config } from '../..';
 
 @Restricted({ userIDs: config.owners })
 export default class SyncCommand implements ICommand {
-  name = 'sync';
-  aliases: ['sb'];
+  name = 'syncban';
 
   public async execute({ msg, client, args }: CommandParams): Promise<CommandOutput> {
     const id = args[0];
@@ -30,7 +29,7 @@ export default class SyncCommand implements ICommand {
     const message = await msg.channel.createMessage({
       embed: {
         description: `Attempting to ban \`${username}\` in **${guilds.size}** guilds...`
-      }
+      },
     });
 
     await Promise.all(guilds.map((async (guild) => {
