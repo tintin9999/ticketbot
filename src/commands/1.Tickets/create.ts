@@ -47,7 +47,7 @@ export default class CreateCommand implements ICommand {
     return {
       title: `Successfully created ticket #${ticket._id}`,
       fields: [{
-        name: 'Content',
+        name: 'Ticket content',
         value: ticket.content
       }],
       footer: {

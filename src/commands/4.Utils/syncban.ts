@@ -4,8 +4,9 @@ import { Restricted } from '../decorators';
 import { config } from '../..';
 
 @Restricted({ userIDs: config.owners })
-export default class SyncCommand implements ICommand {
+export default class SyncBanCommand implements ICommand {
   name = 'syncban';
+  help: 'ban someone in all servers that the bot has ban permissions in';
 
   public async execute({ msg, client, args }: CommandParams): Promise<CommandOutput> {
     const id = args[0];
@@ -48,6 +49,8 @@ export default class SyncCommand implements ICommand {
         timestamp: new Date(),
       }
     });
-    return null;
+    return {
+      description: 'done'
+    };
   }
 }
