@@ -10,17 +10,16 @@ export default class SyncBanCommand implements ICommand {
 
   public async execute({ msg, client, args }: CommandParams): Promise<CommandOutput> {
     const id = args[0];
-    const reason = args.slice(0, 1).join(' ');
 
-    if (!(reason.length <= 2)) {
-      return 'You need to provide a reason.';
+    if (!id) {
+      return 'you need to include a user ID and reason';
     }
-
+    const reason = args[1] ? args.slice(0, 1).join(' ') : 'Breaking Bot Rules/Discord TOS';
     let user: User;
     try {
       user = await client.getRESTUser(id);
     } catch (_) {
-      return `Invalid user ID.`;
+      return `\`${id}\` isn't a valid user ID.`;
     }
   
     const username = `${user.username}#${user.discriminator}`;
