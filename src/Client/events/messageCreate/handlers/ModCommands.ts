@@ -29,15 +29,19 @@ export const ModCommands: Handler = async function (msg) {
     return null;
   }
 
-  const description = embed.fields[0].value.split('\n').join(' ');
+  const toSend = embed.fields[0].value.split('\n');
 
+  if (toSend.length <= 3) {
+    return null;
+  }
+
+  const description = toSend.join(' ');
   msg.channel.createMessage({
     embed: {
       title: 'Formatted IDs',
       description,
       timestamp: new Date(),
     },
-    message_reference: { message_id: msg.id }
   });
   return null;
 };

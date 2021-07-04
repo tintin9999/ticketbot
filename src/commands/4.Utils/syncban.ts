@@ -3,18 +3,19 @@ import { User } from 'eris';
 import { Restricted } from '../decorators';
 import { config } from '../..';
 
-@Restricted({ userIDs: config.owners })
+@Restricted({ userIDs: config.botMods })
 export default class SyncBanCommand implements ICommand {
   name = 'syncban';
   help: 'ban someone in all servers that the bot has ban permissions in';
 
   public async execute({ msg, client, args }: CommandParams): Promise<CommandOutput> {
+    const reason = `Breaking Bot Rules/Discord TOS. Authorized by ${msg.author.username}#${msg.author.discriminator} (\`${msg.author.id}\`).`;
     const id = args[0];
 
     if (!id) {
-      return 'you need to include a user ID and reason';
+      return 'you need to include a user ID';
     }
-    const reason = args[1] ? args.slice(0, 1).join(' ') : 'Breaking Bot Rules/Discord TOS';
+
     let user: User;
     try {
       user = await client.getRESTUser(id);
@@ -28,7 +29,7 @@ export default class SyncBanCommand implements ICommand {
 
     const message = await msg.channel.createMessage({
       embed: {
-        description: `Attempting to ban \`${username}\` in **${guilds.size}** guilds...`
+        description: `Attempting to ban **${username}** in **${guilds.size}** guilds...`
       },
     });
 
@@ -37,19 +38,17 @@ export default class SyncBanCommand implements ICommand {
         await guild.banMember(user.id, 0, reason);
       } catch (error) {
         noPerms.push(guild.name);
-        console.log(error.stack);
+        console.log(error.message);
       }
     })));
 
     await message.edit({ 
       embed: {
         title: 'Sync-ban Completed <:check:832415939525083136>',
-        description: `**${username}** (\`${user.id}\`) was banned from **${guilds.size - noPerms.length}** guilds.\n\nFailed in:\n${noPerms.join('\n')}`,
+        description: `**${username}** (\`${user.id}\`) was banned from **${guilds.size - noPerms.length}** servers.\n\nFailed in:\n${noPerms.join(', ')}`,
         timestamp: new Date(),
       }
     });
-    return {
-      description: 'done'
-    };
+    return null;
   }
 }

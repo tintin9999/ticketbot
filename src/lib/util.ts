@@ -30,8 +30,10 @@ export const paginate = <T>(
     (pageIndex + 1) * resultsPerPage
   );
 
-export const codeblock = (text: string, language?: codeblockLanguage): string =>
-  `\`\`\`${language ?? ''}\n${text}\n\`\`\``;
+export const codeblock = (text: string, language?: codeblockLanguage): string => {
+  const backticks = '```';
+  return `${backticks}${language ?? ''}\n${text}\n${backticks}`;
+}
 
 export const escapeMarkdown = (text: string): string =>
   text.replace(markdownCharRegex, '\\$1');

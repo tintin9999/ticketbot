@@ -10,17 +10,17 @@ export default class DeleteCommand implements ICommand {
       return 'specify a ticket ID and try again';
     }
 
-    const override = args.includes('--override') && args.splice(args.indexOf('--override'), 1);
+    // const override = args.includes('--override') && args.splice(args.indexOf('--override'), 1);
     const ticket = await db.tickets.getTicket(args[0]);
     if (!ticket) {
       return `no ticket with ID #${args[0]}`;
     }
     if (
-      (ticket.userID !== msg.author.id && !override) 
+      ticket.userID !== msg.author.id 
       && !client.opts.owners.includes(msg.author.id) 
       && !client.opts.botMods.includes(msg.author.id)
     ) {
-      return 'you don\'t own this ticket.\n(run again with `--override` to delete the ticket if this was not a mistake)';
+      return 'you don\'t own this ticket.';
     }
 
     for (const recipient of ticket.recipients) {

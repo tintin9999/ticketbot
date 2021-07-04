@@ -13,8 +13,9 @@ export default class ViewCommand implements ICommand {
       return `I couldn't find a ticket with ID ${args[0]}`;
     }
 
+    const user = await client.getRESTUser(ticket.userID);
     return args.includes('--raw')
       ? escapeMarkdown(ticket.content)
-      : TicketRenderer.renderTicket(ticket, await client.getRESTUser(ticket.userID), TicketRenderer.States.OPEN);
+      : TicketRenderer.renderTicket(ticket, user, TicketRenderer.States.OPEN);
   }
 }
