@@ -9,7 +9,7 @@
     "lint": "eslint -c ./.eslintrc.js --ext .ts .",
     "dry": "tsc --noEmit",
     "test": "npm run lint && npm run dry",
-    "compile": "tsc -p tsconfig.json",
+    "compile": "rm -rf build/ && tsc -p tsconfig.json && cd build",
     "build": "bash ./scripts/build.sh"
   },
   "repository": {
