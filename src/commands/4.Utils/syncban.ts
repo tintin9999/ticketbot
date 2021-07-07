@@ -9,13 +9,19 @@ export default class SyncBanCommand implements ICommand {
   help: 'ban someone in all servers that the bot has ban permissions in';
 
   public async execute({ msg, client, args }: CommandParams): Promise<CommandOutput> {
-    const reason = `Breaking Bot Rules/Discord TOS. Authorized by ${msg.author.username}#${msg.author.discriminator} (\`${msg.author.id}\`).`;
-    const id = args[0];
+    const authorization = `Authorized by ${msg.author.username}#${msg.author.discriminator} (${msg.author.mention}).`;
+    const [id, reason] = args;
+    let banReason = '';
 
     if (!id) {
       return 'you need to include a user ID';
     }
 
+    if (!reason) {
+      banReason = `Breaking Bot Rules/Discord TOS in a major way.\n${authorization}`;
+    }
+
+    banReason = `${args.slice(1).join(' ')}.\n${authorization}`;
     let user: User;
     try {
       user = await client.getRESTUser(id);
@@ -35,7 +41,7 @@ export default class SyncBanCommand implements ICommand {
 
     await Promise.all(guilds.map((async (guild) => {
       try {
-        await guild.banMember(user.id, 0, reason);
+        await guild.banMember(user.id, 0, banReason);
       } catch (error) {
         noPerms.push(guild.name);
         console.log(error.message);
@@ -45,7 +51,7 @@ export default class SyncBanCommand implements ICommand {
     await message.edit({ 
       embed: {
         title: 'Sync-ban Completed <:check:832415939525083136>',
-        description: `**${username}** (\`${user.id}\`) was banned from **${guilds.size - noPerms.length}** servers.\n\nFailed in:\n${noPerms.join(', ')}`,
+        description: `**${username}** (\`${user.id}\`) was banned from **${guilds.size - noPerms.length}** servers for: ${banReason}.\n\nFailed in:\n${noPerms.join(', ')}`,
         timestamp: new Date(),
       }
     });

@@ -1,4 +1,4 @@
-import { Client, Collection, User } from 'eris';
+import { Client } from 'eris';
 import { commandLoader, Context, ICommand } from '../commands';
 import * as events from './events';
 import Database from '../Database';
@@ -30,7 +30,6 @@ export default class TicketBot extends Client {
     super(`Bot ${opts.keys.discord}`, {
       intents: [
         "guilds",
-        "guildMembers",
         "guildBans",
         "guildMessages",
         "directMessages"
@@ -38,9 +37,6 @@ export default class TicketBot extends Client {
       getAllUsers: false,
       restMode: true,
     });
-
-    this.users = new Collection(User, 1);
-
     this.opts = opts;
     this.context = {
       commands: this.commands,
