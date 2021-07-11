@@ -7,7 +7,7 @@ import { config } from '../../';
 @Restricted({ userIDs: config.botMods })
 export default class ToggleGuildCommand implements ICommand {
   name = 'toggle-guild';
-  alias: ['addguild'];
+  alias: ['tg'];
   
   public async execute({ client, db, args }: CommandParams): Promise<CommandOutput> {
     const [id] = args;
