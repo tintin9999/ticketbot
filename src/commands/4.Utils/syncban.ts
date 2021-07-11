@@ -19,9 +19,10 @@ export default class SyncBanCommand implements ICommand {
 
     if (!reason) {
       banReason = `Breaking Bot Rules/Discord TOS in a major way.\n${authorization}`;
+    } else if (reason) {
+      banReason = `${args.slice(1).join(' ')}.\n${authorization}`;
     }
 
-    banReason = `${args.slice(1).join(' ')}.\n${authorization}`;
     let user: User;
     try {
       user = await client.getRESTUser(id);

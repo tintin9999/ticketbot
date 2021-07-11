@@ -1,6 +1,6 @@
 import { GenericTable, GenericEntity } from './GenericTable';
 
-export type Guild = {
+export type GuildDB = {
   guildID: string;
   ownerID: string;
   whitelists?: {
@@ -17,29 +17,29 @@ export type RemovedEntity = {
   id: string;
 };
 
-export default class Guilds extends GenericTable<Guild> {
-  public get(guildID: Guild['guildID']): Promise<Guild> {
+export default class Guilds extends GenericTable<GuildDB> {
+  public get(guildID: GuildDB['guildID']): Promise<GuildDB> {
     return this.collection.findOne({ guildID });
   }
 
-  public async addGuild(guild: Guild): Promise<void> {
+  public async addGuild(guild: GuildDB): Promise<void> {
     await this.collection.insertOne(guild);
   }
 
-  public async exists(guild: Guild): Promise<boolean> {
+  public async exists(guild: GuildDB): Promise<boolean> {
     return this.collection.findOne({ guildID: guild.guildID }).then(Boolean);
   }
 
-  public async removeGuild(guildID: Guild['guildID']): Promise<void> {
+  public async removeGuild(guildID: GuildDB['guildID']): Promise<void> {
     await this.collection.deleteOne({ guildID });
   }
 
-  public async getAllGuildIDs(): Promise<Guild['guildID'][]> {
+  public async getAllGuildIDs(): Promise<GuildDB['guildID'][]> {
     return this.getAll().then((guilds) => guilds.map((g) => g.guildID));
   }
 
   public async updateWhitelist(
-    guildID: Guild['guildID'],
+    guildID: GuildDB['guildID'],
     wlType: whitelist,
     wlEntity,
   ): Promise<boolean> {
@@ -54,7 +54,7 @@ export default class Guilds extends GenericTable<Guild> {
     return false;
   }
 
-  public async removeWhitelist(guild: Guild, identity: string): Promise<RemovedEntity | null> {
+  public async removeWhitelist(guild: GuildDB, identity: string): Promise<RemovedEntity | null> {
     for (const key of Object.keys(guild.whitelists)) {
       if (guild.whitelists[key].includes(identity)) {
         this.collection.updateOne({ _id: guild._id }, {

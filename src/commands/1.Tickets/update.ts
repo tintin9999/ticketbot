@@ -14,7 +14,7 @@ export default class UpdateCommand implements ICommand {
       return 'specify the new content of this ticket and try again';
     }
 
-    const override = args.includes('--override') && args.splice(args.indexOf('--override'), 1);
+    const override = args.includes('--override') && args.splice(args.indexOf('--override'), 1) && !client.opts.botMods.includes(msg.author.id);
     const append = args.includes('--append') && args.splice(args.indexOf('--append'), 1);
     const newContent = args.slice(1).join(' ');
     const ticket = await db.tickets.getTicket(args[0]);
@@ -29,7 +29,7 @@ export default class UpdateCommand implements ICommand {
     }
 
     if (append) {
-      ticket.content = ticket.content.trim() + `\n\n*--- Appended at ${dateToString(new Date())} ---*\n${newContent}`;
+      ticket.content = ticket.content.trim() + `\n\n*--- Appended at ${dateToString(new Date())} by ${msg.author.username}---*\n${newContent}`;
     } else {
       ticket.content = newContent;
     }

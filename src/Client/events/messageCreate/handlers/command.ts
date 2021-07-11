@@ -16,7 +16,7 @@ export const handleCommand: Handler = async function (msg) {
   if (msg.author.id === msg.member.guild.ownerID && msg.content.toLowerCase() === `${config.prefix}request`) {
     const { id, token } = config.guildLogger;
     await this.executeWebhook(id, token, {
-      content: `${config.owners.map((r) => `<@${r}>`).join(', ')}`,
+      content: `${config.botMods.map((r) => `<@${r}>`).join(', ')}`,
       embeds: [
         {
           title: msg.member.guild.name,
