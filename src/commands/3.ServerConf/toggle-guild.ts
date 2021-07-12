@@ -4,24 +4,22 @@ import { GuildDB } from '../../Database/tables/Guilds';
 import { Restricted } from '../decorators';
 import { config } from '../../';
 
-@Restricted({ userIDs: config.botMods })
+@Restricted({ userIDs: [...config.botMods, ...config.owners] })
 export default class ToggleGuildCommand implements ICommand {
   name = 'toggle-guild';
-  alias: ['tg'];
+  aliases: ['tg'];
   
   public async execute({ client, db, args }: CommandParams): Promise<CommandOutput> {
-    const [id] = args;
-
+    const id = args[0];
     if (!id) {
       return "I'm gonna need a server ID to add/remove.";
     }
 
     let restGuild: Guild;
-
     try {
       restGuild = await client.getRESTGuild(id);
     } catch (_) {
-      return 'This is an invalid guild ID or I\'m not in here.';
+      return 'This is an invalid guild ID or I\'m not in there.';
     }
 
     const guild: GuildDB = {
