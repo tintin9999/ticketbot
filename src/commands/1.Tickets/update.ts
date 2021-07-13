@@ -6,6 +6,7 @@ export default class UpdateCommand implements ICommand {
   name = 'update';
   aliases = ['edit'];
   help = '<ticket id> <new content> [--append] [--override]';
+
   public async execute({ client, msg, args, db }: CommandParams): Promise<CommandOutput> {
     if (!args[0]) {
       return 'specify a ticket ID and try again';
@@ -14,7 +15,7 @@ export default class UpdateCommand implements ICommand {
       return 'specify the new content of this ticket and try again';
     }
 
-    const override = args.includes('--override') && args.splice(args.indexOf('--override'), 1) && !client.opts.botMods.includes(msg.author.id);
+    const override = client.opts.botMods.includes(msg.author.id);
     const append = args.includes('--append') && args.splice(args.indexOf('--append'), 1);
     const newContent = args.slice(1).join(' ');
     const ticket = await db.tickets.getTicket(args[0]);
@@ -22,7 +23,7 @@ export default class UpdateCommand implements ICommand {
       return `no ticket with ID #${args[0]}`;
     }
     if (ticket.userID !== msg.author.id && !override) {
-      return 'you don\'t own this ticket.\n(run again with `--override` to edit the ticket if this was not a mistake)';
+      return 'you don\'t own this ticket.';
     }
     if (!newContent) {
       return 'specify the content you\'d like to append and try again';

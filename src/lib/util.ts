@@ -33,7 +33,7 @@ export const paginate = <T>(
 export const codeblock = (text: string, language?: codeblockLanguage): string => {
   const backticks = '```';
   return `${backticks}${language ?? ''}\n${text}\n${backticks}`;
-}
+};
 
 export const escapeMarkdown = (text: string): string =>
   text.replace(markdownCharRegex, '\\$1');
